@@ -1,19 +1,33 @@
-<h2 mat-dialog-title>Dados de {{ username }}</h2>
-<div mat-dialog-content>
-    <mat-progress-spinner 
-    color="accent"
-    mode="indeterminate"
-    *ngIf="user == null; else content"
-    ></mat-progress-spinner>
+<div class="Tudo">
+    <h2 mat-dialog-title>Perfil de {{ username }}</h2>
+    <div mat-dialog-content>
+        <mat-progress-spinner color="accent" mode="indeterminate" *ngIf="user == null; else content">
+        </mat-progress-spinner>
 
-    <ng-template #content>
-        <a [href]="user?.html_url" target="_blank">
+        <ng-template #content>
+            <!-- <a [href]="user?.html_url" target="_blank">
             {{ user?.name }}
-        </a>
-    </ng-template>
-    
-    <!-- <p *ngIf="user != null">
-        {{ user | json }}
-    </p> -->
+        </a> -->
 
+            <div class="Perfil">
+                <img src="{{user?.avatar_url}}" alt="Foto do usuário {{ username }}">
+                <p><b>Informações Perfil</b></p>
+                <p>Localização: {{ user?.location }}</p>
+                <p>Seguidores: {{ user?.followers }} pessoas</p>
+                <p>Seguindo: {{ user?.following }} pessoas</p>
+                <p>Conta criada em: {{ user?.created_at }}</p>
+            </div>
+
+            <div class="repos">
+                <p><b>Sobre os Repositórios</b></p>
+                <mat-card class="Repos" *ngFor="let repos of rep">
+                    <p><a [href]="repos?.html_url" target="_blank">Nome do repositório: {{ repos?.name }}</a></p><br />
+                    <p>Descrição: {{ repos?.description }}</p><br />
+                    <p>Linguagem: {{ repos?.language }}</p><br />
+                    <p>Quantidade de estrelas: {{ repos?.stargazers_count }}</p>
+                </mat-card>
+            </div>
+
+        </ng-template>
+    </div>
 </div>

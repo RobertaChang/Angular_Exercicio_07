@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GhRep } from '../../models/ghRep';
 import { GhUser } from '../../models/ghUser';
 import { GhApiService } from '../../services/gh-api.service';
 
@@ -10,7 +11,9 @@ import { GhApiService } from '../../services/gh-api.service';
 export class GhDialogComponent implements OnInit {
 
   username: string = ''
+  repository: string = ''
   user: GhUser | null = null
+  rep: GhRep [] | undefined
 
   constructor(
     private ghService: GhApiService
@@ -18,8 +21,14 @@ export class GhDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.ghService.findUser(this.username).subscribe(
-      (gUser) => {
-        this.user = gUser
+      (ghUser) => {
+        this.user = ghUser
+      }
+    )
+
+    this.ghService.findRepository(this.username).subscribe(
+      (ghRep) => {
+        this.rep = ghRep
       }
     )
   }
